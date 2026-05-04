@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SecureTrustOTA - 25-26J-058</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">SecureTrust<span>OTA</span></a>
+  <ul class="nav-links">
+    <li><a href="index.html" class="active">Home</a></li>
+    <li><a href="domain.html">Domain</a></li>
+    <li><a href="milestones.html">Milestones</a></li>
+    <li><a href="documents.html">Documents</a></li>
+    <li><a href="presentations.html">Slides</a></li>
+    <li><a href="about.html">About Us</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+  <span class="nav-badge">25-26J-058</span>
+</nav>
+
+<div class="page-wrap">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-tag">Research Project · SLIIT · 2025–2026</div>
+
+    <div class="shield-wrap">
+      <div class="shield-ring"></div>
+      <div class="shield-ring"></div>
+      <div class="shield-ring"></div>
+      <div class="shield-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
+             stroke-linecap="round" stroke-linejoin="round" style="color:var(--cyan)">
+          <path d="M12 2L3 7v5c0 5.25 3.75 10.15 9 11.35C17.25 22.15 21 17.25 21 12V7L12 2z"/>
+          <path d="M9 12l2 2 4-4" stroke-width="1.8"/>
+        </svg>
+      </div>
+    </div>
+
+    <h1>Secure<span class="highlight">Trust</span>OTA</h1>
+    <p class="hero-sub">
+      A Resilient and Trust-Based Over-the-Air Firmware Update Framework for IoT Devices,
+      integrating Zero-Trust Authorization, secure delivery, fail-safe rollback, and anomaly detection.
+    </p>
+
+    <div class="hero-meta">
+      <span><strong>Project ID:</strong> 25-26J-058</span>
+      <span><strong>Department:</strong> Computer Systems Engineering</span>
+      <span><strong>Faculty:</strong> Computing · SLIIT</span>
+      <span><strong>Year:</strong> 2025 / 2026</span>
+    </div>
+
+    <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;">
+      <a href="domain.html" class="btn btn-primary">Explore Research →</a>
+      <a href="documents.html" class="btn btn-outline">View Documents</a>
+    </div>
+  </section>
+
+  <hr class="divider" />
+
+  <!-- ABSTRACT -->
+  <div class="section">
+    <div class="section-label">Abstract</div>
+    <h2 class="section-title">What is SecureTrustOTA?</h2>
+    <div class="abstract-box">
+      SecureTrustOTA is a modular, four-layered OTA firmware security framework designed
+       for resource-constrained IoT environments. It enforces continuous Zero Trust authorization and 
+       per-transaction device verification, evaluates device health through lightweight real-time anomaly 
+       detection, optimizes firmware delivery using an instruction-aware delta patching engine, and 
+       guarantees post-update stability through active hardware attestation and autonomous rollback 
+        all working together to secure not just the firmware package, but the entire update lifecycle.
+
+    </div>
+  </div>
+
+  <hr class="divider" />
+
+  <!-- 4 LAYERS -->
+  <div class="section">
+    <div class="section-label">Framework Architecture</div>
+    <h2 class="section-title">Four Integrated Layers</h2>
+    <p class="section-desc">
+      SecureTrustOTA is built on four tightly integrated components, each addressing a critical
+      dimension of IoT firmware security.
+    </p>
+
+    <div class="cards">
+
+      <!-- Layer 1 - featured (your component) -->
+      <div class="card featured">
+        <div class="card-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+               stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 2L3 7v5c0 5.25 3.75 10.15 9 11.35C17.25 22.15 21 17.25 21 12V7L12 2z"/>
+            <path d="M9 12l2 2 4-4"/>
+          </svg>
+        </div>
+        <h3>Zero-Trust Authorization Layer</h3>
+        <p>
+          Enforces continuous authentication, dynamic policy-based access control,
+          firmware attestation, and tamper-evident audit logging. No implicit trust at any stage.
+        </p>
+        <span class="card-tag">Layer #1 · Core Component</span>
+      </div>
+
+      <!-- Layer 2 -->
+      <div class="card">
+        <div class="card-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+               stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="7" width="20" height="14" rx="2"/>
+            <path d="M16 3H8l-2 4h12l-2-4z"/>
+            <path d="M12 12v4M10 14h4"/>
+          </svg>
+        </div>
+        <h3>Lightweight Secure OTA Core</h3>
+        <p>
+          Ensures efficient, encrypted update transfer using ECC and AES-CCM encryption,
+          delta updates, and transmission strategies tailored for low-power devices.
+        </p>
+        <span class="card-tag">Layer #2</span>
+      </div>
+
+      <!-- Layer 3 -->
+      <div class="card">
+        <div class="card-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+               stroke-linecap="round" stroke-linejoin="round">
+            <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
+          </svg>
+        </div>
+        <h3>Threshold-Based Anomaly Detection</h3>
+        <p>
+          Continuously monitors key OTA parameters - update size, memory usage, timing —
+          to flag abnormal or malicious update behaviour before it causes harm.
+        </p>
+        <span class="card-tag">Layer #3</span>
+      </div>
+
+      <!-- Layer 4 -->
+      <div class="card">
+        <div class="card-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+               stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/>
+            <path d="M3 3v5h5"/>
+            <path d="M12 7v5l4 2"/>
+          </svg>
+        </div>
+        <h3>Resilient Fail-Safe Update Engine</h3>
+        <p>
+          Safeguards device availability through dual-slot updates, rollback prevention,
+          secure logging, and recovery scheduling to minimise downtime in all failure scenarios.
+        </p>
+        <span class="card-tag">Layer #4</span>
+      </div>
+
+    </div>
+  </div>
+
+  <hr class="divider" />
+
+  <!-- QUICK STATS -->
+  <div class="section">
+    <div class="section-label">Project Scope</div>
+    <h2 class="section-title">At a Glance</h2>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:1rem;margin-top:1.5rem;">
+      <div class="card" style="text-align:center;">
+        <div style="font-family:'Syne',sans-serif;font-size:2rem;font-weight:800;color:var(--cyan);">4</div>
+        <div style="font-size:0.85rem;color:var(--muted);">Framework Layers</div>
+      </div>
+      
+      <div class="card" style="text-align:center;">
+        <div style="font-family:'Syne',sans-serif;font-size:2rem;font-weight:800;color:var(--cyan);">1000+</div>
+        <div style="font-size:0.85rem;color:var(--muted);">Scalable Device Support</div>
+      </div>
+      <div class="card" style="text-align:center;">
+        <div style="font-family:'Syne',sans-serif;font-size:2rem;font-weight:800;color:var(--cyan);">99%</div>
+        <div style="font-size:0.85rem;color:var(--muted);">Target Uptime SLA</div>
+      </div>
+      <div class="card" style="text-align:center;">
+        <div style="font-family:'Syne',sans-serif;font-size:2rem;font-weight:800;color:var(--cyan);">4</div>
+        <div style="font-size:0.85rem;color:var(--muted);">Team Members</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- USE CASES -->
+  <div class="section">
+    <div class="section-label">Applications</div>
+    <h2 class="section-title">Commercial Use Cases</h2>
+    <div class="cards">
+      <div class="card">
+        <h3>⚡ Smart Energy Grids</h3>
+        <p>Secure, uninterrupted firmware updates for smart meters and grid infrastructure without disrupting billing or regulatory compliance.</p>
+      </div>
+      <div class="card">
+        <h3>🏥 Healthcare IoT</h3>
+        <p>Trust-verified updates for critical medical monitoring equipment - ensuring continuous, safe operation for patient-critical devices.</p>
+      </div>
+      <div class="card">
+        <h3>🏭 Industrial IoT</h3>
+        <p>Lightweight OTA updates for SCADA systems and manufacturing plants requiring 24/7 uptime and zero-interruption operations.</p>
+      </div>
+      <div class="card">
+        <h3>🏠 Smart Homes</h3>
+        <p>Seamless, secure updates for consumer IoT devices - smart plugs, cameras, and appliances - maintaining safety and user trust.</p>
+      </div>
+    </div>
+  </div>
+
+</div><!-- end page-wrap -->
+
+<footer>
+  <strong>SecureTrustOTA</strong> · Project 25-26J-058 ·
+  Department of Computer Systems Engineering, Faculty of Computing, SLIIT · 2025–2026
+</footer>
+
+</body>
+</html>

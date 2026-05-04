@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Domain - SecureTrustOTA</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">SecureTrust<span>OTA</span></a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="domain.html" class="active">Domain</a></li>
+    <li><a href="milestones.html">Milestones</a></li>
+    <li><a href="documents.html">Documents</a></li>
+    <li><a href="presentations.html">Slides</a></li>
+    <li><a href="about.html">About Us</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+  <span class="nav-badge">25-26J-058</span>
+</nav>
+
+<div class="page-wrap">
+  <div class="page-header">
+    <div class="section-label">Research Domain</div>
+    <h1>Domain Overview</h1>
+    <p>Literature survey, research gap, problem statement, objectives, methodology and technologies.</p>
+  </div>
+
+  <div class="section">
+    <!-- TABS -->
+    <div class="tabs">
+      <button class="tab-btn active" onclick="showTab('lit')">Literature Survey</button>
+      <button class="tab-btn" onclick="showTab('gap')">Research Gap</button>
+      <button class="tab-btn" onclick="showTab('prob')">Research Problem</button>
+      <button class="tab-btn" onclick="showTab('obj')">Objectives</button>
+      <button class="tab-btn" onclick="showTab('meth')">Methodology</button>
+      <button class="tab-btn" onclick="showTab('tech')">Technologies Used</button>
+    </div>
+
+    <!-- LITERATURE SURVEY -->
+    <div id="tab-lit" class="tab-panel active">
+      <div class="content-block">
+        <h2>Literature Survey</h2>
+        <p>
+          The rapid expansion of IoT has transformed sectors from manufacturing and healthcare to energy
+          and transportation. These devices require frequent firmware updates, making secure Over-the-Air
+          (OTA) delivery a critical research area. The following key works inform this project.
+        </p>
+
+        <h3>SecFOTA - Saad El Jaouhari (2022)</h3>
+        <p>
+          Targets insecure OTA updates on highly constrained IoT devices.
+           Defines roles (Manufacturer, Supplier, Gateway, IoT Device) and a 
+           trust chain using public-key signatures and secure channels. Includes mutual
+            authentication and an attestation step where the IoT device sends proof of
+             a successful update back to the gateway. Limitation: does not implement dynamic 
+             access policies or comprehensive audit logging, leaving it unable to respond to runtime 
+             changes in device trust status.
+        </p>
+
+        <h3>ASSURED - N. Asokan et al. (2018)</h3>
+        <p>
+          Presents a secure firmware update framework for large-scale IoT deployments. Introduces an 
+          authorization token bound to each firmware package, where the manufacturer signs an update
+           and includes a token encoding device-specific constraints, effectively addressing end-to-end
+            authenticity. Limitation: its static token model lacks per-request policy flexibility and 
+            provides no mechanism for detecting changes in device hardware state between update cycles.
+             No audit logs or continuous attestation during operation are provided
+        </p>
+
+        <h3>Zero Trust  MQTT IoT - Meha James et al. (2025)</h3>
+        <p>
+          Proposes a Zero Trust architecture for general IoT networking, specifically MQTT messaging.
+           Embeds an ABAC engine inside the MQTT broker as a Policy Enforcement Point, adding only 
+           approximately 20–45ms of latency versus over 100ms for traditional setups. Limitation: targets 
+           the communication layer rather than firmware updates, so it does not address firmware 
+           authenticity or device attestation at the OTA delivery level.
+        </p>
+
+        <h3>DICE-Based Runtime Attestation-  Stefan Hristozov et al. (2018)</h3>
+        <p>
+          Presents an on-device runtime attestation scheme for tiny IoT microcontrollers, isolating an
+           attestation routine in privileged mode using a standard MPU and lockable ROM secret. The MCU
+            executes isolated code to measure its firmware hash and returns a signed report, making it 
+            feasible on low-cost devices without TPM or TrustZone. Limitation: only generates attestations
+             without addressing how updates are fetched, authorized, or logged.
+        </p>
+      </div>
+    </div>
+
+    <!-- RESEARCH GAP -->
+    <div id="tab-gap" class="tab-panel">
+      <div class="content-block">
+        <h2>Research Gap</h2>
+        <p>
+          Current Over-the-Air (OTA) firmware update frameworks for IoT devices,
+           including widely used platforms like Mender, Eclipse Hawkbit, Uptane, and TUF 
+            focus almost entirely on securing the delivery of firmware through encryption 
+            and integrity verification. However, they share several critical blind spots:
+          <ul>
+            <li><strong style="color:var(--text)">No device state validation before updates are applied - compromised or unstable devices can still receive firmware</li>
+            <li><strong style="color:var(--text)">Static trust models -  once a device is enrolled, it is trusted indefinitely, even if it becomes physically tampered with or behaviorally compromised.</li>
+            <li><strong style="color:var(--text)">Passive recovery only - standard hardware watchdog timers only react after a complete system crash, missing subtle threats like memory leaks or thread starvation</li>
+            <li><strong style="color:var(--text)">No integration between anomaly detection and update decisions — monitoring systems exist separately and don't influence whether an update proceeds.</li>
+            <li><strong style="color:var(--text)">Heavy ML-based detection - existing anomaly detection approaches are computationally too expensive for resource-constrained IoT devices.</li>
+            <li><strong style="color:var(--text)">Limited audit trails - most frameworks provide minimal logging, reducing forensic and compliance capability
+
+</li>
+          </ul>
+        </p>  
+        <h3>What This Work Addresses</h3>
+        <ul>
+          <li>Layer 1 : Zero Trust Authorization introduces a five-phase adaptive authentication 
+            pipeline that continuously re-verifies every device before each update transaction.
+             Unlike static enrollment models, this layer uses hardware-bound cryptographic identity,
+              adaptive trust scoring, and dynamic role and policy-based access control to ensure only
+               genuinely trusted devices receive firmware.</li>
+
+          <li>Layer 2 : Lightweight Secure OTA Core addresses the inefficiency of full firmware 
+            transfers by introducing an instruction-aware delta patching system. Rather than blindly 
+            applying delta patches, a decision layer evaluates four factors - Structural Change Ratio,
+             Fragmentation Score, Reconstruction Complexity, and Instability Risk to determine
+              whether a delta or full update is more appropriate. An optional peer-assisted
+               mesh distribution model further reduces server load.</li>
+
+          <li>Layer 3 : Threshold-Based Anomaly Detection tackles the lack of pre-update 
+            device health validation by continuously monitoring telemetry parameters such as CPU 
+            usage, memory consumption, battery level, and network performance. A lightweight rule-based 
+            detection engine gates firmware updates, blocking them when a device exhibits 
+            anomalous behavior — without the overhead of machine learning models.</li>
+
+          <li>Layer 4 : Resilient Fail-Safe Update Engine addresses the gap in post-update 
+            behavioral verification. Rather than relying on passive watchdog timers, a custom
+             Finite State Machine (FSM) actively monitors stack memory, heap depletion,
+              and peripheral stability during a probation period after each update, triggering 
+              an autonomous rollback in under 45ms if faults are detected.</li>
+
+        </ul>
+      </div>
+    </div>
+
+    <!-- RESEARCH PROBLEM -->
+    <div id="tab-prob" class="tab-panel">
+      <div class="content-block">
+        <h2>Research Problem</h2>
+        <p>
+          IoT OTA update systems are fundamentally reactive and trust-blind.
+           They secure the firmware package in transit but ignore whether the receiving device is
+            trustworthy, stable, or behaving normally  before, during, or after the update. 
+            This creates a chain of vulnerabilities: unauthorized devices can receive updates,
+             anomalous devices can have updates forced upon them, corrupted payloads can survive
+              cryptographic checks, and faulty firmware can persist undetected after installation.
+        </p>
+      </div>
+    </div>
+
+    <!-- OBJECTIVES -->
+    <div id="tab-obj" class="tab-panel">
+      <div class="content-block">
+        <h2>Objectives</h2>
+
+        <h3>Main Objective</h3>
+        <p>
+          To design and implement a modular, secure, and resilient OTA firmware update 
+          framework for IoT environments that enforces continuous trust verification, 
+          lightweight anomaly detection, efficient firmware delivery, and autonomous post-update
+           recovery.</p>
+
+        <h3>Specific Objectives</h3>
+        <ul>
+          <li>
+            <strong style="color:var(--text)">Design a five-phase Zero Trust authentication 
+              pipeline that binds device identity to physical hardware characteristics and
+               produces a quantitative trust score per update transaction.</li>
+          <li>
+            <strong style="color:var(--text)">Implement dynamic RBAC/PBAC policy enforcement
+               and a nine-category tamper-evident audit logging system for full forensic traceability.</li>
+          <li>
+            <strong style="color:var(--text)">Develop a decision-driven delta patching engine 
+              that evaluates firmware change characteristics before choosing between delta and 
+              full updates, reducing bandwidth and transmission risk.</li>
+          <li>
+            <strong style="color:var(--text)">Build a lightweight threshold-based anomaly
+              detection engine that monitors real-time device telemetry and gates OTA 
+              updates based on device health status</li>
+          <li>
+            <strong style="color:var(--text)">Engineer an active hardware attestation system 
+              using a FreeRTOS-based FSM on ESP32 that detects execution faults during a 
+              post-update probation window and triggers autonomous rollback before system
+               failure.
+</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- METHODOLOGY -->
+    <div id="tab-meth" class="tab-panel">
+      <div class="content-block">
+        <h2>Methodology</h2>
+        <p>
+          The SecureTrustOTA framework follows a modular, layered system engineering approach, 
+          where each layer is independently designed and implemented, then integrated into a 
+          unified pipeline. The overall flow moves from authorization → optimized delivery → 
+          pre-update health check → post-update verification.
+
+        </p>
+
+        <h3>Layer 1 : Zero-Trust Authorization Layer</h3>
+        <p>
+          Layer 1 operates as a Flask-based server with a SQLite backend. 
+          Devices progress through five authentication phases - cryptographic identity, 
+          hardware binding, challenge-response, context-bound proof, and adaptive trust scoring 
+           before any update is authorized. The trust score is computed entirely server-side,
+            preventing compromised devices from self-reporting fraudulent scores.
+
+        </p>
+        <p><em style="color:var(--cyan)">Flow: Authenticate → Authorize → Verify → Log &amp; Audit</em></p>
+
+        <h3>Layer 2 : Lightweight Secure OTA Core</h3>
+        <p>
+          Layer 2 introduces a pre-delivery analysis stage that computes a Decision Score from 
+          four firmware change metrics. If the score is low, an instruction-aware delta patch
+           is generated by parsing the firmware's ELF structure and normalizing address references 
+           before diffing. High scores trigger a full firmware transfer instead. An optional mesh distribution
+            model allows peer devices to relay updates, reducing central server load.
+
+        </p>
+        <p><em style="color:var(--cyan)">Flow: Collect → Generate &amp; Encrypt → Verify &amp; Apply → Validate / Rollback → Alert &amp; Monitor</em></p>
+
+        <h3>Layer 3 : Threshold-Based Anomaly Detection Engine</h3>
+        <p>
+          Layer 3 runs a continuous telemetry monitoring loop on the OTA server. 
+          Device metrics are compared against predefined and adaptive threshold values using rolling
+           window analysis. A debounce mechanism prevents transient spikes from triggering false positives.
+            If a device is flagged as anomalous, the OTA gating mechanism blocks the update and generates 
+            an alert on the monitoring dashboard.
+
+        </p>
+        <p><em style="color:var(--cyan)">Flow: Telemetry → Compare Thresholds → Update (if normal) → Alert &amp; Monitor (if abnormal)</em></p>
+
+        <h3>Layer 4 : Resilient Fail-Safe Update Engine</h3>
+        <p>
+          Layer 4 is implemented directly on the ESP32 hardware using the ESP-IDF framework.
+           Incoming firmware is first written to an SD card buffer (air-gapped staging) rather than 
+           directly to flash, preventing corruption during download. After SHA-256 streaming verification,
+            the firmware is written to the inactive partition. Upon reboot, a high-priority 
+            FreeRTOS attestation task monitors heap memory, stack usage, and peripheral connectivity 
+            for 30 seconds. If abnormalities are detected, the FSM marks the partition invalid and 
+            forces a rollback to the stable partition.
+
+        </p>
+        <p><em style="color:var(--cyan)">Flow: Update → Verify → Test → Rollback if fail → Keep running if pass</em></p>
+      </div>
+    </div>
+
+    <!-- TECHNOLOGIES -->
+    <div id="tab-tech" class="tab-panel">
+      <div class="content-block">
+        <h2>Technologies Used</h2>
+
+        <h3>Security &amp; Cryptography</h3>
+        <div class="tech-grid">
+          <span class="tech-pill cyan">X.509 Certificates</span>
+          <span class="tech-pill cyan">ECC-256</span>
+          <span class="tech-pill cyan">AES-CCM</span>
+          <span class="tech-pill cyan">SHA-256</span>
+          <span class="tech-pill cyan">Digital Signatures</span>
+          <span class="tech-pill cyan">OpenSSL</span>
+          <span class="tech-pill cyan">DICE Attestation</span>
+        </div>
+
+        <h3>Hardware &amp; IoT Platforms</h3>
+        <div class="tech-grid">
+          <span class="tech-pill">ESP32</span>
+          <span class="tech-pill">STM32</span>
+          <span class="tech-pill">ATECC608A Crypto Chip</span>
+          <span class="tech-pill">Arduino IDE</span>
+          <span class="tech-pill">PlatformIO</span>
+        </div>
+
+        <h3>Access Control</h3>
+        <div class="tech-grid">
+          <span class="tech-pill">RBAC (Role-Based Access Control)</span>
+          <span class="tech-pill">PBAC (Policy-Based Access Control)</span>
+          <span class="tech-pill">ABAC (Attribute-Based)</span>
+          <span class="tech-pill">Dynamic Policy Engine</span>
+        </div>
+
+        <h3>Programming Languages &amp; Frameworks</h3>
+        <div class="tech-grid">
+          <span class="tech-pill">Python</span>
+          <span class="tech-pill">Go / Java</span>
+          <span class="tech-pill">Bash</span>
+          <span class="tech-pill">C / Embedded C</span>
+        </div>
+
+        <h3>Infrastructure &amp; Networking</h3>
+        <div class="tech-grid">
+          <span class="tech-pill">Apache / Nginx</span>
+          <span class="tech-pill">PostgreSQL / MongoDB</span>
+          <span class="tech-pill">Docker / Kubernetes</span>
+          <span class="tech-pill">AWS IoT Core (Free Tier)</span>
+          <span class="tech-pill">MQTT</span>
+        </div>
+
+        <h3>Monitoring &amp; Analysis</h3>
+        <div class="tech-grid">
+          <span class="tech-pill">Wireshark</span>
+          <span class="tech-pill">tcpdump</span>
+          <span class="tech-pill">Audit Log Dashboard</span>
+          <span class="tech-pill">Merkle Tree Integrity Checks</span>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- end section -->
+</div>
+
+<footer>
+  <strong>SecureTrustOTA</strong> · Project 25-26J-058 ·
+  Department of Computer Systems Engineering, Faculty of Computing, SLIIT · 2025–2026
+</footer>
+
+<script>
+function showTab(id) {
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + id).classList.add('active');
+  event.target.classList.add('active');
+}
+</script>
+</body>
+</html>
